@@ -7,6 +7,7 @@ window.onload = function() {
 
     // if node is used, fetch the environment variable and pass it to the LIFF method
     // otherwise, pass defaultLiffId
+    initMap();
     if (useNodeJS) {
         fetch('/send-id')
             .then(function(reqResponse) {
@@ -76,7 +77,7 @@ function initializeApp() {
     displayIsInClientInfo();
     registerButtonHandlers();
 
-    initMap();
+    
 
     // check if the user is logged in/out, and disable inappropriate button
     if (liff.isLoggedIn()) {
