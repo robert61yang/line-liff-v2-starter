@@ -9,37 +9,104 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaVjXe2XbwsCLo02K_Pyo59NoNMLQikpg&callback=initMap&libraries=&v=weekly"
         defer
         ></script>
-        <style type="text/css">
-            /* Always set the map height explicitly to define the size of the div
-             * element that contains the map. */
-            #map {
-              height: 50%;
-              width: 50%
-            }
-      
-            /* Optional: Makes the sample page fill the window. */
-            html,
-            body {
-              height: 100%;
-              margin: 0;
-              padding: 0;
-            }
-        </style>
-        <script>
-            let map;
-      
-            function initMap() {
-              map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 8,
-              });
-            }
-          </script>
+        <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaVjXe2XbwsCLo02K_Pyo59NoNMLQikpg&libraries=places&callback=initMap">
+        </script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div id="searchPlace">
+            <label for="inputPlace">地點</label>
+            <input id="inputPlace" type="text">
+            <select id="spottype">
+                <option value="restaurant">Restaurant</option>
+                <option value="bus_station">Bus Station</option>
+                <option value="cafe">Cafe</option>
+                <option value="movie_theater">Movie Theater</option>
+                <option value="tourist_attraction">Landmark</option>
+            </select>
+            <button id="searchButton">Search</button> 
+            <button id="hidesearch">X</button>
+        </div>
         <div id = "map">
         </div>
+
+        <div id="emptyLine"> </div>
+
+        <table id="searchtable" class="table table-bordered table-dark hidden">
+            <thead>
+              <tr id=num>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id=num>
+                <td id=num scope="row">1</td>
+                <td id="resultname1"></td>
+                <td id="resultaddress1"></td>
+                <td id="resultrating1"></td>
+              </tr>
+              <tr id=num> 
+                <td id=num scope="row">2</td>
+                <td id="resultname2"></td>
+                <td id="resultaddress2"></td>
+                <td id="resultrating2"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">3</td>
+                <td id="resultname3"></td>
+                <td id="resultaddress3"></td>
+                <td id="resultrating3"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">4</td>
+                <td id="resultname4"></td>
+                <td id="resultaddress4"></td>
+                <td id="resultrating4"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">5</td>
+                <td id="resultname5"></td>
+                <td id="resultaddress5"></td>
+                <td id="resultrating5"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">6</td>
+                <td id="resultname6"></td>
+                <td id="resultaddress6"></td>
+                <td id="resultrating6"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">7</td>
+                <td id="resultname7"></td>
+                <td id="resultaddress7"></td>
+                <td id="resultrating7"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">8</td>
+                <td id="resultname8"></td>
+                <td id="resultaddress8"></td>
+                <td id="resultrating8"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">9</td>
+                <td id="resultname9"></td>
+                <td id="resultaddress9"></td>
+                <td id="resultrating9"></td>
+              </tr>
+              <tr id=num>
+                <td id=num scope="row">10</td>
+                <td id="resultname10"></td>
+                <td id="resultaddress10"></td>
+                <td id="resultrating10"></td>
+              </tr>
+            </tbody>
+        </table>
+
         <div id="liffAppContent">
             <!-- ACTION BUTTONS -->
             <div class="buttonGroup">

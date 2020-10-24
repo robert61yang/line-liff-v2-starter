@@ -1,3 +1,12 @@
+
+let searchText = "";
+let spotType = "";
+var geocoder;
+var numArray = ['1', '2', '3', '4', '5', '6','7', '8', '9', '10'];
+var istable = false;
+var tempmarkersArray = [];
+const tempicon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=T|FFFFFF|000000";
+
 window.onload = function() {
     const useNodeJS = true;   // if you are not using a node server, set this value to false
     const defaultLiffId = "";   // change the default LIFF value if you are not using a node server
@@ -25,6 +34,18 @@ window.onload = function() {
         initializeLiffOrDie(myLiffId);
     }
 };
+
+let map;
+let bound;
+function initMap() {
+    geocoder = new google.maps.Geocoder();
+    map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 15,
+  });
+  bounds = new google.maps.LatLngBounds();
+}
+
 
 /**
 * Check if myLiffId is null. If null do not initiate liff.
@@ -64,6 +85,7 @@ function initializeLiff(myLiffId) {
 
 
 function initializeApp() {
+    initMap();
     displayLiffData();
     displayIsInClientInfo();
     registerButtonHandlers();
@@ -218,6 +240,95 @@ function registerButtonHandlers() {
             window.location.reload();
         }
     });
+
+    //searchPlace
+    document.getElementById('inputPlace').addEventListener('keyup', function (event) {
+        searchText = event.target.value;
+        //console.log("searchinput="+searchText);
+        
+        //console.log(spotType);
+    });
+
+    document.getElementById('searchButton').addEventListener('click', function() {
+        deleteMarkers(tempmarkersArray);
+        geocoder.geocode( { 'address': searchText}, function(results, status) {
+            let e = document.getElementById('spottype')
+            spotType = e.options[e.selectedIndex].value;
+            console.log(spotType);
+            if (status == 'OK') {
+                //map.setCenter(results[0].geometry.location);
+                //map.fitBounds(bounds.extend(results[0].geometry.location));  
+                map.setCenter(results[0].geometry.location);
+
+                var request = {
+                    location: results[0].geometry.location,
+                    radius: '500',
+                    type: [spotType,],
+                };
+                service = new google.maps.places.PlacesService(map);
+                service.nearbySearch(request, callbackSearch);
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+        
+    });
+
+    document.getElementById("hidesearch").addEventListener('click',function() {
+        if(istable == true){
+            istable = false;
+            deleteMarkers(tempmarkersArray);
+            document.getElementById("searchtable").classList.add("hidden");
+        }
+    });
+
+}
+
+function deleteMarkers(markersArray) {
+    for (let i = 0; i < markersArray.length; i++) {
+      markersArray[i].setMap(null);
+    }
+    markersArray = [];
+}
+
+function callbackSearch(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < 10; i++) {
+        //createMarker(results[i]);
+
+        if(results[i]){
+            tempmarkersArray.push(
+                new google.maps.Marker({
+                  map,
+                  position: results[i].geometry.location,
+                  icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld="+numArray[i]+"|FFFFFF|000000",
+                })
+              );
+            document.getElementById("resultname"+numArray[i]).textContent = results[i].name;
+            document.getElementById("resultaddress"+numArray[i]).textContent = results[i].vicinity;
+            document.getElementById("resultrating"+numArray[i]).textContent = results[i].rating;
+        }else{
+            document.getElementById("resultname"+numArray[i]).textContent = '';
+            document.getElementById("resultaddress"+numArray[i]).textContent = '';
+            document.getElementById("resultrating"+numArray[i]).textContent = '';
+        }
+
+        
+        //console.log(results[i]);
+      }
+      if(istable==false){
+        istable = true;
+        document.getElementById("searchtable").classList.remove("hidden");
+    }
+    
+      
+    }else{
+        for(var i=0;i<10;i++){
+            document.getElementById("resultname"+numArray[i]).textContent = '';
+            document.getElementById("resultaddress"+numArray[i]).textContent = '';
+            document.getElementById("resultrating"+numArray[i]).textContent = '';
+        }
+    }
 }
 
 /**

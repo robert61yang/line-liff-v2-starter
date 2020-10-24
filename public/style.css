@@ -68,3 +68,34 @@ button {
     display: none;
 }
 
+#map {
+    height: 50%;
+    width:80%;
+    margin: 10px auto;
+}
+  
+  /* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#searchPlace{
+    display: block;
+}
+
+.table{
+    max-width: 80%;
+    margin:0 auto;
+}
+
+#emptyLine{
+    display: block;
+    margin:10px;
+}
+
+#num{
+    text-align: center;
+}
