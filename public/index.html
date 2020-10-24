@@ -9,6 +9,16 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaVjXe2XbwsCLo02K_Pyo59NoNMLQikpg&callback=initMap&libraries=&v=weekly"
         defer
         ></script>
+        <script>
+            let map;
+      
+            function initMap() {
+              map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8,
+              });
+            }
+          </script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
