@@ -22,6 +22,7 @@ app.get('/send-id', function(req, res) {
     res.json({id: myLiffId, redirectUri });
 });
 
+/*
 if (process.env.NODE_ENV === 'development') {
     const devCert = fs.readFileSync(
         path.resolve(__dirname, 'cert/localhost.pem')
@@ -36,5 +37,6 @@ if (process.env.NODE_ENV === 'development') {
     server.listen(8000, function() {
         console.log(`https listening on port 8000!`);
     });
-}
+}*/
+
 app.listen(port, () => console.log(`http listening on port ${port}!`));

@@ -61,18 +61,22 @@ function initializeLiff(myLiffId) {
 /**
  * Initialize the app by calling functions handling individual app components
  */
+
+let map;
+function initMap() {
+map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8,
+});
+}
+
+
 function initializeApp() {
     displayLiffData();
     displayIsInClientInfo();
     registerButtonHandlers();
-    let map;
 
-    function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8,
-    });
-    }
+    initMap();
 
     // check if the user is logged in/out, and disable inappropriate button
     if (liff.isLoggedIn()) {
