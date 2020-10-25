@@ -303,7 +303,7 @@ function registerButtonHandlers() {
     //open marker table
     document.getElementById("openmarktable").addEventListener('click',function(){
         if(openmarktable == false){
-                fetch(/mymap/getmarks,{
+                fetch('/mymap/getmarks',{
                     method: 'GET',
                     headers: {
                         'content-type': 'application/json'
