@@ -25,6 +25,7 @@ router.get('/getmarks', async (req, res) => {
     );
   } catch (error) {
     console.error(error.stack);
+    res.send(error)
   }
 });
 
