@@ -491,7 +491,6 @@ function registerButtonHandlers() {
                         let row = table.insertRow(-1);
                         //row.innerHTML = '<td scope="row"></td>'
                         row.innerHTML = '<td scope="row">'+numArray[i]+'</td><td id="markname1">'+json[i].name+'</td><td id="markaddress1">'+json[i].address+'</td><td id="markrating1">'+json[i].author+'</td>'
-                        function geocodeAddress(geocoder, resultsMap) {
                             for(i=0;i<json.length;i++){
                                 geocoder.geocode({ address: json[i].address }, (results, status) => {
                                     if (status === "OK") {
@@ -508,7 +507,6 @@ function registerButtonHandlers() {
                                 });
     
                             }
-                        }
                     }
                 })
 
