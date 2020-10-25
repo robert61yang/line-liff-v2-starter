@@ -19,6 +19,7 @@ router.get('/getmarks', async (req, res) => {
   const campaignId = req.params.id;
   try {
     let result = await db.query('SELECT * FROM markers');
+    console.log(result);
     result = JSON.parse(result);
     res.send(
       result
