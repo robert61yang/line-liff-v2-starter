@@ -321,6 +321,7 @@ function registerButtonHandlers() {
     //open marker table
     document.getElementById("openmarktable").addEventListener('click',function(){
         if(openmarktable == false){
+                openmarktable = true;
                 document.getElementById("marktable").classList.remove("hidden");
                 fetch('/mymap/getmarks',{
                     method: 'GET',
@@ -339,6 +340,12 @@ function registerButtonHandlers() {
                         row.innerHTML = '<td scope="row">'+numArray[i]+'</td><td id="markname1">'+json[i].name+'</td><td id="markaddress1">'+json[i].address+'</td><td id="markrating1">'+json[i].author+'</td>'
                     }
                 })
+        }else{
+            openmarktable = false;
+            let table = document.getElementById("marktable");
+            while(table.rows[-1]){    
+                table.rows[-1].innerHTML = '';
+            }
         }
     })
 
