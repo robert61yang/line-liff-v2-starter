@@ -5,10 +5,10 @@ const router = express.Router();
 // export our router to be mounted by the parent application
 module.exports = router;
 
-router.post('/add', async (req, res) => {
-  const { name, place, time } = req.body;
+router.post('/setmark', async (req, res) => {
+  const { name, author, address } = req.body;
   try { 
-    const { rows } = await db.query('INSERT INTO campaign(name, place, time) VALUES($1, $2, $3) RETURNING *', [name, place, time]);
+    const { rows } = await db.query('INSERT INTO markers(name,author, address) VALUES($1, $2, $3) RETURNING *', [name, author, address]);
     res.send(rows[0]);
   } catch (error) {
     console.error(error.stack);
