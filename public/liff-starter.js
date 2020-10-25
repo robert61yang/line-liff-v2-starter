@@ -303,13 +303,13 @@ function registerButtonHandlers() {
                       headers: {
                         'content-type': 'application/json'
                       },
-                      body:{
+                      body: JSON.stringify({
                         author: authname,
                         name: document.getElementById("resultname"+numArray[i]).textContent,
                         address: document.getElementById("resultaddress"+numArray[i]).textContent,
-                      }
+                      })
                     })
-                       
+
                   });
 
             }       
