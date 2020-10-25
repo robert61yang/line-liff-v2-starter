@@ -20,9 +20,9 @@ router.get('/getmarks', async (req, res) => {
   try {
     let result = await db.query('SELECT * FROM markers');
     console.log(result);
-    result = JSON.parse(result);
+    // result = JSON.parse(result);
     res.send(
-      result
+      result.rows
     );
   } catch (error) {
     console.error(error.stack);
