@@ -8,6 +8,7 @@ var tempmarkersArray = [];
 const tempicon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=T|FFFFFF|000000";
 var tselected = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 var openmarktable = false;
+var len = 0;
 
 window.onload = function() {
     const useNodeJS = true;   // if you are not using a node server, set this value to false
@@ -334,6 +335,7 @@ function registerButtonHandlers() {
                 }).then(json => {
                     console.log(json[0].name);
                     let table = document.getElementById("marktable");
+                    len = json.length;
                     for(i=0;i<json.length;i++){
                         let row = table.insertRow(-1);
                         //row.innerHTML = '<td scope="row"></td>'
@@ -344,7 +346,7 @@ function registerButtonHandlers() {
             openmarktable = false;
             document.getElementById("marktable").classList.add("hidden");
             let table = document.getElementById("marktable");
-            while(table.rows[-1]){    
+            for(let i=0;i<len;i++){    
                 table.deleteRow(-1);
             }
         }
