@@ -321,7 +321,7 @@ function registerButtonHandlers() {
     //open marker table
     document.getElementById("openmarktable").addEventListener('click',function(){
         if(openmarktable == false){
-                document.getElementById("openmarktable").classList.remove("hidden");
+                document.getElementById("marktable").classList.remove("hidden");
                 fetch('/mymap/getmarks',{
                     method: 'GET',
                     headers: {
