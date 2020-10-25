@@ -9,6 +9,9 @@ const tempicon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=
 var tselected = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 var openmarktable = false;
 var len = 0;
+var ConcernTime;
+var ConcernPlace;
+var PS;
 
 window.onload = function() {
     const useNodeJS = true;   // if you are not using a node server, set this value to false
@@ -566,6 +569,46 @@ function callbackSearch(results, status) {
             document.getElementById("resultrating"+numArray[i]).textContent = '';
         }
     }
+
+
+    
+    document.getElementById('sendschedule').addEventListener('click', function() {
+        if (!liff.isInClient()) {
+            sendAlertIfNotInClient();
+        } else {
+            liff.getProfile().then((result) => {
+                const authname = result.displayName;
+                fetch('/mymap/getmarks',{
+                    method: 'GET',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                }).then(function (result) {
+                    console.log(result);
+                    return result.json()
+                }).then(json => {
+                    document.getElementById('ConcernTime').addEventListener('keyup', function (event) {
+                        ConcernTime = event.target.value;
+                    });
+                    document.getElementById('ConcernPlace').addEventListener('keyup', function (event) {
+                        ConcernPlace = json[parseInt(event.target.value)].name;
+                    });
+                    document.getElementById('PS').addEventListener('keyup', function (event) {
+                        PS = event.target.value;
+                    });
+                    liff.sendMessages([{
+                        'type': 'text',
+                        'text': 'Departure time : ' + ConcernTime + '\n' + 'Destination :' + ConcernPlace + '\n' + 'P.S.' + PS,
+                    }]).then(function() {
+                        window.alert('Message sent');
+                    }).catch(function(error) {
+                        window.alert('Error sending message: ' + error);
+                    });
+                })
+
+              });
+        }
+    });    
 }
 
 /**
