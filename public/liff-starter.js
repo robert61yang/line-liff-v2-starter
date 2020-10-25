@@ -309,7 +309,7 @@ function registerButtonHandlers() {
                         'content-type': 'application/json'
                     },
                 }).then(function (result) {
-                    console.log(result)
+                    console.log(result);
                 })
         }
     })
