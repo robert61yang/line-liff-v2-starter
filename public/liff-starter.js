@@ -291,11 +291,6 @@ function registerButtonHandlers() {
     });
     console.log("@@@@@@@")
     for(let i=0;i<10;i++){
-        console.log(JSON.stringify({
-            author: authname,
-            name: document.getElementById("resultname"+numArray[i]).textContent,
-            address: document.getElementById("resultaddress"+numArray[i]).textContent,
-          }))
         document.getElementById("trow"+numArray[i]).addEventListener('click', function(){
             if(tselected[i]== -1){
                 tselected[i] = 1;
