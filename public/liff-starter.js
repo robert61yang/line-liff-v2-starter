@@ -388,6 +388,14 @@ function registerButtonHandlers() {
     });
 
     document.getElementById('searchButton').addEventListener('click', function() {
+        if(openmarktable==true){
+            openmarktable = false;
+            document.getElementById("marktable").classList.add("hidden");
+            let table = document.getElementById("marktable");
+            for(let i=0;i<len;i++){    
+                table.deleteRow(-1);
+            }
+        }
         for(let i=0;i<10;i++){
             if(tselected[i] != -1){
                 document.getElementById("trow"+numArray[i]).classList.remove("selected");
@@ -425,7 +433,7 @@ function registerButtonHandlers() {
             document.getElementById("searchtable").classList.add("hidden");
         }
     });
-    console.log("@@@@@@@")
+    //console.log("@@@@@@@")
     for(let i=0;i<10;i++){
         document.getElementById("trow"+numArray[i]).addEventListener('click', function(){
             if(tselected[i]== -1){
@@ -450,13 +458,19 @@ function registerButtonHandlers() {
             }       
         });
     };
-    console.log("@@@@@@@")
+    //console.log("@@@@@@@")
 
 
     
     //open marker table
     document.getElementById("openmarktable").addEventListener('click',function(){
         if(openmarktable == false){
+            if(istable == true){
+                istable = false;
+                deleteMarkers(tempmarkersArray);
+                document.getElementById("searchtable").classList.add("hidden");
+            }
+
                 openmarktable = true;
                 document.getElementById("marktable").classList.remove("hidden");
                 fetch('/mymap/getmarks',{
@@ -476,7 +490,11 @@ function registerButtonHandlers() {
                         //row.innerHTML = '<td scope="row"></td>'
                         row.innerHTML = '<td scope="row">'+numArray[i]+'</td><td id="markname1">'+json[i].name+'</td><td id="markaddress1">'+json[i].address+'</td><td id="markrating1">'+json[i].author+'</td>'
                     }
+
                 })
+
+                
+
         }else{
             openmarktable = false;
             document.getElementById("marktable").classList.add("hidden");
