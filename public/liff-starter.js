@@ -334,6 +334,7 @@ function registerButtonHandlers() {
                     let table = document.getElementById("marktable");
                     for(i=0;i<json.length;i++){
                         let row = table.insertRow(i);
+                        
                         row.innerHTML = '<td scope="row">'+numArray[i]+'</td><td id="markname1">'+json[i].name+'</td><td id="markaddress1">'+json[i].address+'</td><td id="markrating1">'+json[i].author+'</td>'
                     }
                 })
