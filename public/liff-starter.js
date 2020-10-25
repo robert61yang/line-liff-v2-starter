@@ -294,9 +294,7 @@ function registerButtonHandlers() {
         document.getElementById("trow"+numArray[i]).addEventListener('click', function(){
             if(tselected[i]== -1){
                 tselected[i] = 1;
-                document.getElementById("trow"+numArray[i]).classList.add("selected");
-                console.console.log("!!!!!!!");
-                
+                document.getElementById("trow"+numArray[i]).classList.add("selected");                
                 liff.getProfile().then((result) => {
                     const authname = result.displayName;
                     fetch('/mymap/setmark', {
