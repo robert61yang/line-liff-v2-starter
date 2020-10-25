@@ -310,6 +310,9 @@ function registerButtonHandlers() {
                     },
                 }).then(function (result) {
                     console.log(result);
+                    return result.json()
+                }).then(json => {
+                    console.log(json[0].name);
                 })
         }
     })
