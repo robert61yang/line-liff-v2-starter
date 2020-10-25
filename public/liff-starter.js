@@ -342,6 +342,7 @@ function registerButtonHandlers() {
                 })
         }else{
             openmarktable = false;
+            document.getElementById("marktable").classList.add("hidden");
             let table = document.getElementById("marktable");
             while(table.rows[-1]){    
                 table.rows[-1].innerHTML = '';
