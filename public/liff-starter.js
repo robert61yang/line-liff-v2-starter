@@ -6,7 +6,8 @@ var numArray = ['1', '2', '3', '4', '5', '6','7', '8', '9', '10'];
 var istable = false;
 var tempmarkersArray = [];
 const tempicon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=T|FFFFFF|000000";
-//var tselected = [-1,-1];
+var tselected = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+var openmarktable = false;
 
 window.onload = function() {
     const useNodeJS = true;   // if you are not using a node server, set this value to false
@@ -251,13 +252,11 @@ function registerButtonHandlers() {
     });
 
     document.getElementById('searchButton').addEventListener('click', function() {
-        if(tselected[0] != -1){
-            document.getElementById("trow"+numArray[tselected[0]]).classList.remove("selected");
-            tselected[0] = -1;
-        }
-        if(tselected[1] != -1){
-            document.getElementById("trow"+numArray[tselected[1]]).classList.remove("selected");
-            tselected[1] = -1;
+        for(let i=0;i<10;i++){
+            if(tselected[i] != -1){
+                document.getElementById("trow"+numArray[i]).classList.remove("selected");
+                tselected[i] = -1;
+            }
         }
         deleteMarkers(tempmarkersArray);
         geocoder.geocode( { 'address': searchText}, function(results, status) {
@@ -293,21 +292,28 @@ function registerButtonHandlers() {
 
     for(let i=0;i<10;i++){
         document.getElementById("trow"+numArray[i]).addEventListener('click', function(){
-            if(tselected[0]== -1){
-                tselected[0] = i;
+            if(tselected[i]== -1){
+                tselected[i] = 1;
                 document.getElementById("trow"+numArray[i]).classList.add("selected");
-            }else if(tselected[1] == -1){
-                tselected[1] = i;
-                document.getElementById("trow"+numArray[i]).classList.add("selected");
-            }
-            else if(tselected[0] != i && tselected[1] != i){
-                document.getElementById("trow"+numArray[tselected[0]]).classList.remove("selected");
-                tselected[0] = tselected[1];
-                tselected[1] = i;
-                document.getElementById("trow"+numArray[i]).classList.add("selected");
-            }
+            }       
         });
-    }
+    };
+
+    
+    //open marker table
+    document.getElementById("openmarktable").addEventListener('click',function(){
+        if(openmarktable == false){
+                fetch(/mymap/getmarks,{
+                    method: 'GET',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                }).then(function (result) {
+                    console.log(result)
+                })
+        }
+    })
+
 }
 
 function deleteMarkers(markersArray) {
