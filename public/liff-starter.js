@@ -295,6 +295,7 @@ function registerButtonHandlers() {
             if(tselected[i]== -1){
                 tselected[i] = 1;
                 document.getElementById("trow"+numArray[i]).classList.add("selected");
+
                 liff.getProfile().then((result) => {
                     const authname = result.displayName;
                     fetch('/mymap/setmark', {
@@ -307,10 +308,10 @@ function registerButtonHandlers() {
                         name: document.getElementById("resultname"+numArray[i]).textContent,
                         address: document.getElementById("resultaddress"+numArray[i]).textContent,
                       }
-                    }).then(function (result) {
-                        return result.json();
-                    })      
+                    })
+                       
                   });
+
             }       
         });
     };

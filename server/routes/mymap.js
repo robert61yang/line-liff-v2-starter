@@ -8,9 +8,9 @@ module.exports = router;
 router.post('/setmark', async (req, res) => {
   const { name, author, address } = req.body;
   try { 
-    const { rows } = await db.query('INSERT INTO markers(name,author, address) VALUES($1, $2, $3) RETURNING *', [name, author, address]);
-    res.send(rows[0]);
-  } catch (error) {
+    await db.query('INSERT INTO markers(name,author, address) VALUES($1, $2, $3)', [name, author, address]);
+  
+    } catch (error) {
     console.error(error.stack);
   }
 });
