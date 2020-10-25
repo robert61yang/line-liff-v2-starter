@@ -486,34 +486,30 @@ function registerButtonHandlers() {
                     console.log(json[0].name);
                     let table = document.getElementById("marktable");
                     len = json.length;
-                    let addr = [];
+                    var suremarkersArray = [];
                     for(i=0;i<json.length;i++){
                         let row = table.insertRow(-1);
                         //row.innerHTML = '<td scope="row"></td>'
                         row.innerHTML = '<td scope="row">'+numArray[i]+'</td><td id="markname1">'+json[i].name+'</td><td id="markaddress1">'+json[i].address+'</td><td id="markrating1">'+json[i].author+'</td>'
-                        addr.push(json[i].address);
-                    }
-                    //write markers
-                    const suremarkersArray = [];
-                    function geocodeAddress(geocoder, resultsMap) {
-                        for(i=0;i<json.length;i++){
-                            geocoder.geocode({ address: addr[i] }, (results, status) => {
-                                if (status === "OK") {
-                                    markersArray.push(
-                                        new google.maps.Marker({
-                                            map,
-                                            position: results[0].geometry.location,
-                                            icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=S|FF0000|000000",
-                                        })
-                                      );
-                                } else {
-                                    alert("Geocode was not successful for the following reason: " + status);
-                                }
-                            });
-
+                        function geocodeAddress(geocoder, resultsMap) {
+                            for(i=0;i<json.length;i++){
+                                geocoder.geocode({ address: json[i].address }, (results, status) => {
+                                    if (status === "OK") {
+                                        markersArray.push(
+                                            new google.maps.Marker({
+                                                map,
+                                                position: results[0].geometry.location,
+                                                icon: "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=S|FF0000|000000",
+                                            })
+                                          );
+                                    } else {
+                                        alert("Geocode was not successful for the following reason: " + status);
+                                    }
+                                });
+    
+                            }
                         }
                     }
-
                 })
 
                 
