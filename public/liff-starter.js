@@ -494,7 +494,7 @@ function registerButtonHandlers() {
                             for(i=0;i<json.length;i++){
                                 geocoder.geocode({ address: json[i].address }, (results, status) => {
                                     if (status === "OK") {
-                                        markersArray.push(
+                                        suremarkersArray.push(
                                             new google.maps.Marker({
                                                 map,
                                                 position: results[0].geometry.location,
