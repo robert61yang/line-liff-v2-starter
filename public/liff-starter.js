@@ -570,6 +570,15 @@ function callbackSearch(results, status) {
         }
     }
 
+    document.getElementById('ConcernTime').addEventListener('keyup', function (event) {
+        ConcernTime = event.target.value;
+    });
+    document.getElementById('ConcernPlace').addEventListener('keyup', function (event) {
+        ConcernPlace = event.target.value;
+    });
+    document.getElementById('PS').addEventListener('keyup', function (event) {
+        PS = event.target.value;
+    });
 
     
     document.getElementById('sendschedule').addEventListener('click', function() {
@@ -587,15 +596,7 @@ function callbackSearch(results, status) {
                     console.log(result);
                     return result.json()
                 }).then(json => {
-                    document.getElementById('ConcernTime').addEventListener('keyup', function (event) {
-                        ConcernTime = event.target.value;
-                    });
-                    document.getElementById('ConcernPlace').addEventListener('keyup', function (event) {
-                        ConcernPlace = json[parseInt(event.target.value)].name;
-                    });
-                    document.getElementById('PS').addEventListener('keyup', function (event) {
-                        PS = event.target.value;
-                    });
+                    ConcernPlace = json[parseInt(ConcernPlace)].name;
                     liff.sendMessages([{
                         'type': 'text',
                         'text': 'Departure time : ' + ConcernTime + '\n' + 'Destination :' + ConcernPlace + '\n' + 'P.S.' + PS,
