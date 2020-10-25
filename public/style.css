@@ -96,6 +96,8 @@ body {
     margin:10px;
 }
 
-#num{
-    text-align: center;
+
+
+.selected{
+    background-color: #cce6ff;
 }
