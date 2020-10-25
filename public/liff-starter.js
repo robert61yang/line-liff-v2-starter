@@ -491,7 +491,7 @@ function registerButtonHandlers() {
                         let row = table.insertRow(-1);
                         //row.innerHTML = '<td scope="row"></td>'
                         row.innerHTML = '<td scope="row">'+numArray[i]+'</td><td id="markname1">'+json[i].name+'</td><td id="markaddress1">'+json[i].address+'</td><td id="markrating1">'+json[i].author+'</td>'
-                        addr.append(json[i].address);
+                        addr.push(json[i].address);
                     }
                     //write markers
                     const suremarkersArray = [];
