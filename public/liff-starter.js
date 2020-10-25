@@ -596,10 +596,10 @@ function callbackSearch(results, status) {
                     console.log(result);
                     return result.json()
                 }).then(json => {
-                    ConcernPlace = json[parseInt(ConcernPlace)].name;
+                    var abc = json[parseInt(ConcernPlace)].name;
                     liff.sendMessages([{
                         'type': 'text',
-                        'text': 'Departure time : ' + ConcernTime + '\n' + 'Destination :' + ConcernPlace + '\n' + 'P.S.' + PS,
+                        'text': 'Departure time : ' + ConcernTime + '\n' + 'Destination :' + abc + '\n' + 'P.S.' + PS,
                     }]).then(function() {
                         window.alert('Message sent');
                     }).catch(function(error) {
