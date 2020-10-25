@@ -39,15 +39,150 @@ window.onload = function() {
 };
 
 let map;
-let bound;
+let bounds;
 function initMap() {
     geocoder = new google.maps.Geocoder();
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
     map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -34.397, lng: 150.644 },
     zoom: 15,
-  });
-  bounds = new google.maps.LatLngBounds();
+    });
+    directionsRenderer.setMap(map);
+    const onChangeHandler = function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+    };
+    document.getElementById("start").addEventListener("change", onChangeHandler);
+    document.getElementById("end").addEventListener("change", onChangeHandler);
+    bounds = new google.maps.LatLngBounds();
 }
+
+///destination matrix
+function destinationMap(origins, destinations, draw) {
+    const markersArray = [];
+    const destinationIcon = "https://chart.googleapis.com/chart?" +"chst=d_map_pin_letter&chld=D|FF0000|000000";
+    const originIcon = "https://chart.googleapis.com/chart?" +"chst=d_map_pin_letter&chld=O|FFFF00|000000";
+    const geocoder = new google.maps.Geocoder();
+    const service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+          origins: [origins],
+          destinations: [destinations],
+          travelMode: google.maps.TravelMode.DRIVING,
+          unitSystem: google.maps.UnitSystem.METRIC,
+          avoidHighways: false,
+          avoidTolls: false,
+      },
+      (response, status) => {
+          if (status !== "OK") {
+            alert("Error was: " + status);
+          } else {
+            const originList = response.originAddresses;
+            const destinationList = response.destinationAddresses;
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "";
+            deleteMarkers(markersArray);
+            const showGeocodedAddressOnMap = function (asDestination) {
+              const icon = asDestination ? destinationIcon : originIcon;
+              return function (results, status) {
+                if (status === "OK") {
+                  map.fitBounds(bounds.extend(results[0].geometry.location));
+                  if(draw){
+                  markersArray.push(
+                    new google.maps.Marker({
+                      map,
+                      position: results[0].geometry.location,
+                      icon: icon,
+                    })
+                  );
+                  }
+                }else {
+                   alert("Geocode was not successful due to: " + status);
+                }
+              };
+            };
+    
+            for (let i = 0; i < originList.length; i++) {
+              const results = response.rows[i].elements;
+              geocoder.geocode(
+                 { address: originList[i] },
+                 showGeocodedAddressOnMap(false)
+              );
+    
+              for (let j = 0; j < results.length; j++) {
+                 geocoder.geocode(
+                    { address: destinationList[j] },
+                    showGeocodedAddressOnMap(true)
+                 );
+                  outputDiv.innerHTML +=
+                    "  Distance :" +
+                    results[j].distance.text +
+                    "  Duration : " +
+                    results[j].duration.text +
+                    "<br>";
+                  if(draw) return results[j].duration.value;
+              }
+            }
+          }
+      }
+    );
+  }
+    
+  function deleteMarkers(markersArray) {
+      for (let i = 0; i < markersArray.length; i++) {
+        markersArray[i].setMap(null);
+      }
+      markersArray = [];
+  }
+  
+  ///direction
+  /*document.getElementById("start").addEventListener("change", onChangeHandler);
+  document.getElementById("end").addEventListener("change", onChangeHandler);*/
+  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+      let a = document.getElementById("start").value;
+      let b = document.getElementById("end").value;
+      let c1 = document.getElementById("resultaddress"+numArray[a-1]).textContent;
+      let d1 = document.getElementById("resultaddress"+numArray[b-1]).textContent;
+      const geocoder = new google.maps.Geocoder();
+      function geocodeAddress(geocoder, resultsMap) {
+        const address = c1;
+        geocoder.geocode({ address: address }, (results, status) => {
+          if (status === "OK") {
+            c1 = results[0].geometry.location;
+          } else {
+            alert("Geocode was not successful for the following reason: " + status);
+          }
+        });
+        address = d1;
+        geocoder.geocode({ address: address }, (results, status) => {
+          if (status === "OK") {
+            d1 = results[0].geometry.location;
+          } else {
+            alert("Geocode was not successful for the following reason: " + status);
+          }
+        });
+      }
+      destinationMap(c1, d1, 0);
+      directionsService.route(
+          {
+          origin: {
+             query: c1,
+          },
+          destination: {
+             query: d1,
+          },
+          travelMode: google.maps.TravelMode.DRIVING,
+          },
+          (response, status) => {
+          if (status === "OK") {
+             directionsRenderer.setDirections(response);
+             map.setCenter(c1);
+          } else {
+             window.alert("Directions request failed due to " + status);
+          }
+          }
+      );        
+  }
 
 
 /**

@@ -101,3 +101,15 @@ body {
 .selected{
     background-color: #cce6ff;
 }
+
+#start{
+    display: inline;
+}
+
+#end{
+    display: inline;
+}
+
+#output{
+    display: inline;
+}
