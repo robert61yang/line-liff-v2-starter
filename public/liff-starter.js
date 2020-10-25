@@ -289,8 +289,13 @@ function registerButtonHandlers() {
             document.getElementById("searchtable").classList.add("hidden");
         }
     });
-
+    console.log("@@@@@@@")
     for(let i=0;i<10;i++){
+        console.log(JSON.stringify({
+            author: authname,
+            name: document.getElementById("resultname"+numArray[i]).textContent,
+            address: document.getElementById("resultaddress"+numArray[i]).textContent,
+          }))
         document.getElementById("trow"+numArray[i]).addEventListener('click', function(){
             if(tselected[i]== -1){
                 tselected[i] = 1;
@@ -305,8 +310,8 @@ function registerButtonHandlers() {
                       },
                       body: JSON.stringify({
                         author: authname,
-                        name: document.getElementById("resultname"+numArray[i]).textContent,
-                        address: document.getElementById("resultaddress"+numArray[i]).textContent,
+                        name: document.getElementById("resultname"+numArray[i]).textContent||'',
+                        address: document.getElementById("resultaddress"+numArray[i]).textContent||'',
                       })
                     })
 
@@ -315,6 +320,8 @@ function registerButtonHandlers() {
             }       
         });
     };
+    console.log("@@@@@@@")
+
 
     
     //open marker table
