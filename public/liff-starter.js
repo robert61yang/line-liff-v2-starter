@@ -576,7 +576,7 @@ function callbackSearch(results, status) {
     document.getElementById('ConcernPlace').addEventListener('keyup', function (event) {
         ConcernPlace = event.target.value;
     });
-    document.getElementById('PS').addEventListener('keyup', function (event) {
+    document.getElementById('PScb').addEventListener('keyup', function (event) {
         PS = event.target.value;
     });
 
