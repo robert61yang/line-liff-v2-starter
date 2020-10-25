@@ -176,7 +176,7 @@ function destinationMap(origins, destinations, draw) {
           (response, status) => {
           if (status === "OK") {
              directionsRenderer.setDirections(response);
-             map.setCenter(c1);
+             //map.setCenter(c1);
           } else {
              window.alert("Directions request failed due to " + status);
           }
